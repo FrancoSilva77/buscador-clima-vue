@@ -1,8 +1,11 @@
 <script setup>
 import Formulario from "./components/Formulario.vue";
 import useClima from "./composables/useClima";
+import Clima from "./components/Clima.vue";
+import Spinner from "./components/Spinner.vue";
+import Alerta from "./components/Alerta.vue";
 
-const { obtenerClima } = useClima();
+const { obtenerClima, clima, mostrarClima, cargando, error } = useClima();
 </script>
 
 <template>
@@ -10,5 +13,9 @@ const { obtenerClima } = useClima();
 
   <div class="contenedor buscador-clima">
     <Formulario @obtener-clima="obtenerClima" />
+
+    <Spinner v-if="cargando" />
+    <Alerta v-if="error">{{ error }}</Alerta>
+    <Clima v-if="mostrarClima" :clima="clima" />
   </div>
 </template>
